@@ -7,8 +7,43 @@ struct Node {
 };
 
 // Floyd's cycle-finding algorithm (Tortoise and Hare)
-bool hasCycle(Node* head) {
+
+bool hasCycle(Node* head) {               //Function that answers: “Does our train loop in a circle?” Input: head is the first wagon’s address. Output: true if there’s a loop, false if not.
     // TO DO: Implement your code here. 
+ 
+
+
+//Commment: we're going to impllement the classic tortoise & hare trick to detect loops.
+
+// If list is empty or has a single node, it cannot form a cycle
+    
+
+     if (head == nullptr || head->next == nullptr) {     //No wagons or only one wagon? There’s no way to loop.
+        return false;
+    }
+
+    Node* slow = head;        // Tortosie moves 1 step on first wagon)
+    Node* fast = head->next;  // Hare starts ahead and moves 2 steps starts one ahead)
+
+    // Move until fast falls off (no cycle) or slow catches fast (cycle)
+    while (fast != nullptr && fast->next != nullptr) {   //The hare needs two steps; if there isn’t a next or a next-next, we’ve reached the end → no loop.
+        if (slow == fast) {    //If they point to the same exact wagon, the hare has lapped the tortoise → the track loops.
+            return true; // pointers met → loop exists
+        }
+        slow = slow->next;           // 1 step       
+        fast = fast->next->next;     // 2 steps
+    }
+
+    // fast hit the end → no cycle    //We return false; the hare fell off the track (hit nullptr), so it’s a straight list.
+    return false;
+
+
+
+
+
+
+
+
 }
 
 // Helper to create a singly linked list with n nodes. Returns head and optionally
